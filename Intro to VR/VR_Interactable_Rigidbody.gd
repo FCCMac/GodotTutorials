@@ -1,4 +1,5 @@
 extends RigidBody
+class_name VR_Interactable_Rigidbody
 
 # warning-ignore:unused_class_variable
 var controller = null

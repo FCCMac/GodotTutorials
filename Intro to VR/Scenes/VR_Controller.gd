@@ -16,7 +16,7 @@ var grab_pos_node
 var hand_mesh: MeshInstance
 var hand_pickup_drop_sound: AudioStreamPlayer3D
 
-var teleport_pos:Vector3 = Vector3.ZERO
+var teleport_pos = Vector3(0, 0, 0)
 var teleport_mesh: MeshInstance
 var teleport_button_down
 var teleport_raycast: RayCast
@@ -102,9 +102,14 @@ func _physics_process_directional_movement(delta):
 	var joystick_vector = Vector2(-get_joystick_axis(5), get_joystick_axis(4))
 	
 	if trackpad_vector.length() < CONTROLLER_DEADZONE:
-		trackpad_vector = Vector2(0, 0)
+		trackpad_vector = Vector2(0,0)
 	else:
-		trackpad_vector = joystick_vector.normalized() * ((trackpad_vector.length() - CONTROLLER_DEADZONE) / (1 - CONTROLLER_DEADZONE))
+		trackpad_vector = trackpad_vector.normalized() * ((trackpad_vector.length() - CONTROLLER_DEADZONE) / (1 - CONTROLLER_DEADZONE))
+	
+	if joystick_vector.length() < CONTROLLER_DEADZONE:
+		joystick_vector = Vector2(0,0)
+	else:
+		joystick_vector = joystick_vector.normalized() * ((joystick_vector.length() - CONTROLLER_DEADZONE) / (1 - CONTROLLER_DEADZONE))
 	
 	var forward_direction = get_parent().get_node("Player_Camera").global_transform.basis.z.normalized()
 	var right_direction = get_parent().get_node("Player_Camera").global_transform.basis.x.normalized()
